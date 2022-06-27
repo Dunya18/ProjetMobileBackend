@@ -3,7 +3,8 @@ const { getAllParkingsService,
   getParkingByIdService,
   calculateDistanceService,
   createParkingService,
-  searchNearestParkingService } = require("../services/parkings-service")
+  searchNearestParkingService,
+  getLatLongService } = require("../services/parkings-service")
 
 const createParking = async (req, res) => {
   const { code, data } = await createParkingService(req.body)
@@ -38,4 +39,10 @@ const searchNearestParking = async (req,res) =>{
   const { code, data } = await searchNearestParkingService(address)
   return res.status(code).json(data)
 }
-module.exports = { getAllParkings, searchParkingByName, getParkingById, calculateDistance, createParking, searchNearestParking }
+
+const getLatLong = async (req,res) =>{
+  const { address } = req.params;
+  const { code, data } = await getLatLongService(address)
+  return res.status(code).json(data)
+}
+module.exports = { getAllParkings, searchParkingByName, getParkingById, calculateDistance, createParking, searchNearestParking, getLatLong}

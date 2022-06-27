@@ -107,6 +107,31 @@ const longitudeSaved = res[0].longitude
     }
   }
 }
+const getLatLongService = async (address) => {
+  try{
+  const options = {
+  provider: 'google',
+
+  // Optional depending on the providers
+  // fetch: customFetchImplementation,
+  apiKey: 'AIzaSyCmkShDzip1-oGS8iUXbudxXeStdnClGes', // for Mapquest, OpenCage, Google Premier
+  formatter: 'json' // 'gpx', 'string', ...
+};
+
+const geocoder = NodeGeocoder(options);
+
+// Using callback
+const res = await geocoder.geocode(address + 'Algeria');
+
+// get latitude et longitude
+const latitude = res[0].latitude
+const longitude = res[0].longitude 
+return { code: 200, data: { latitude, longitude } }
+  } catch (e) {
+    console.error(e);
+    return { code: 500, data: { msg: "Server error..." } }
+  }
+}
 
 
 
@@ -151,5 +176,6 @@ module.exports = {
   getParkingByIdService,
   calculateDistanceService,
   createParkingService,
-  searchNearestParkingService
+  searchNearestParkingService,
+  getLatLongService
 }
