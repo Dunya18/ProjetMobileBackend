@@ -1,22 +1,22 @@
 const mongoose = require("mongoose");
 
 const userSchema = new mongoose.Schema({
-  nom: {
+  name: {
     type: String, required: true
   },
-  prenom: {
-    type: String, required: true
-  },
-  numero: {
+  family_name: {
     type: String, required: true
   },
   email: {
     type: String, unique: true, required: true
   },
+  phone_number: {
+    type: String, required: true
+  },
   password: {
     type: String, required: true
   },
-  photoLink: String
+  photoLink: {type:String, default: "$2a$10$CzZ5OWdzm1rR07.JU4eiouGkiMvEcG6mmbm8fAxPJgaRsUASbOc1S"}
 }, { timestamps: true });
 
 module.exports = User = mongoose.model("user", userSchema);

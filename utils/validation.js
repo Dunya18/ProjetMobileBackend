@@ -2,12 +2,11 @@ const Joi = require("joi");
 
 function registerValidation(data) {
   const schema = new Joi.object({
-    nom: Joi.string().required().min(3).max(255),
-    prenom: Joi.string().required().min(3).max(255),
-    numero: Joi.string().required().min(6).max(255),
+    name: Joi.string().required().min(3).max(255),
+    family_name: Joi.string().required().min(3).max(255),
+    phone_number: Joi.string().required().min(6).max(255),
     email: Joi.string().required().min(6).max(255).email(),
-    password: Joi.string().required().min(6).max(255),
-    photoLink: Joi.string(),
+    password: Joi.string().required().min(4).max(255),
   });
   return schema.validate(data);
 }
@@ -15,7 +14,7 @@ function registerValidation(data) {
 function loginValidation(data) {
   const schema = new Joi.object({
     email: Joi.string().required().max(255).email(),
-    password: Joi.string().required().min(6).max(255),
+    password: Joi.string().required().min(4).max(255),
   });
   return schema.validate(data);
 }

@@ -13,10 +13,10 @@ const login = async (req, res) => {
 }
 
 const register = async (req, res) => {
-  const { error } = await registerValidation(req.body);
+  //const { error } = await registerValidation(req.body);
 
   // Valdidate the attributes
-  if (error) return res.status(400).json({ msg: error.details[0].message });
+ // if (error) return res.status(400).json({ msg: error.details[0].message });
 
   const response = await registerService(req.body);
 

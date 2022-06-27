@@ -2,14 +2,14 @@ const mongoose = require("mongoose");
 
 const parkingSchema = new mongoose.Schema({
   imglink: String,
-  nom: { type: String, required: true },
-  commune: { type: String, required: true },
-  latitude: { type: Number, required: true },
-  longitude: { type: Number, required: true },
-  horraireOuver: { type: String, required: true },
-  horraireFerm: { type: String, required: true },
-  tarifHeure: { type: Number, required: true },
-  nbPlace: { type: Number, required: true }
+  nom: { type: String},
+  commune: { type: String},
+  latitude: { type: Number },
+  longitude: { type: Number },
+  horraireOuver: { type: Number},
+  horraireFerm: { type: Number },
+  tarifHeure: { type: Number },
+  nbPlace: { type: Number}
 }, { timestamps: true });
 
 module.exports = Parking = mongoose.model("parking", parkingSchema);

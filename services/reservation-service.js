@@ -4,7 +4,7 @@ const User = require("../models/User");
 
 const getAllReservationsService = async (userId) => {
   try {
-    const reservations = await Reservation.find({ user: userId }).populate("user").populate("parking")
+    const reservations = await Reservation.find({ user: userId })
     return {
       code: 200,
       data: reservations

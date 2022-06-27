@@ -25,10 +25,12 @@ const loginService = async ({ email, password }) => {
       code: 200,
       data: {
         id: user.id,
-        nom: user.nom,
-        prenom: user.prenom,
-        numero: user.numero,
+        name: user.name,
+        family_name: user.family_name,
         email: user.email,
+        phone_number : user.phone_number,
+        password : user.password,
+        photoLink : user.photoLink,
         token
       }
     }
@@ -47,11 +49,10 @@ const registerService = async (data) => {
   const hashedPassword = await bcrypt.hash(data.password, salt);
 
   const newUser = new User({
-    nom: data.nom,
-    prenom: data.prenom,
-    numero: data.numero,
+    name: data.name,
+    family_name: data.family_name,
+    phone_number: data.phone_number,
     email: data.email,
-    photoLink: data.photoLink,
     password: hashedPassword,
   });
 
@@ -68,10 +69,12 @@ const registerService = async (data) => {
       code: 200,
       data: {
         id: savedUser.id,
-        nom: savedUser.nom,
-        prenom: savedUser.prenom,
-        numero: savedUser.numero,
+        name: savedUser.name,
+        family_name: savedUser.family_name,
+        phone_number: savedUser.phone_number,
         email: savedUser.email,
+        password : savedUser.password,
+        photoLink : savedUser.photoLink,
         token
       }
     }
