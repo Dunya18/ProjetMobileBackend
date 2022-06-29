@@ -48,8 +48,8 @@ const getLatLong = async (req,res) =>{
 }
 
 const advancedResearch = async (req,res) =>{
-  const { maxprice,address, maxdistance } = req.body;
-  const { code, data } = await advancedResearchService(maxprice,address, maxdistance)
+  const { address,maxprice, maxdistance } = req.body;
+  const { code, data } = await advancedResearchService(address,maxprice, maxdistance)
   return res.status(code).json(data)
 }
 module.exports = { getAllParkings, searchParkingByName, getParkingById, calculateDistance, createParking, searchNearestParking, getLatLong, advancedResearch}
