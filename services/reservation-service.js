@@ -25,13 +25,24 @@ const createReservationService = async ({ userId, parkingId, dateEntree, dateSor
 
     const parking = await Parking.findById(parkingId)
     if (!parking) return { code: 400, data: { msg: "Parking doesn't exist" } }
+    const dateStart = new Date(dateEntree)
+    dateStart.setHours(0)
+    dateStart.setMinutes(0)
+    dateStart.setSeconds(0)
+
+    const dateEnd = new Date(dateSortie)
+    dateEnd.setHours(0)
+    dateEnd.setMinutes(0)
+    dateEnd.setSeconds(0)
+    dateEnd.setMilliseconds(0)
+    dateEnd.setHours(24)
 
     const reservationsForTheDay = await Reservation.find({
       dateEntree: {
-        $gte: dateEntree
+        $gte: dateStart
       },
       dateSortie: {
-        $lte: dateSortie
+        $lte: dateEnd
       },
       parking: parkingId
     })
@@ -44,7 +55,7 @@ const createReservationService = async ({ userId, parkingId, dateEntree, dateSor
         parking: parkingId,
         dateEntree,
         dateSortie,
-        numeroPlace: parking.nbPlace - reservationsForTheDay.length + 1
+        numeroPlace: reservationsForTheDay.length + 1
       }
     )
 

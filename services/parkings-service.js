@@ -41,24 +41,6 @@ const getAllParkingsService = async () => {
   }
 }
 
-const getParkingByIdService = async (parkingId) => {
-  try {
-    const parkingsList = await Parking.findById(parkingId)
-    return {
-      code: 200,
-      data: parkingsList
-    }
-  } catch (e) {
-    console.error(e);
-    return {
-      code: 500,
-      data: {
-        msg: "Server error..."
-      }
-    }
-  }
-}
-
 const searchNearestParkingService = async (address) => {
 try{
   const options = {
@@ -219,7 +201,48 @@ const searchParkingByNameService = async (searchTerm) => {
     }
   }
 }
+const getParkingByIdService = async (parkingId) => {
+  try {
+    let parking = await Parking.findById(parkingId)
 
+    const dateStart = new Date()
+    dateStart.setHours(0)
+    dateStart.setMinutes(0)
+    dateStart.setSeconds(0)
+
+    const dateEnd = new Date()
+    dateEnd.setHours(0)
+    dateEnd.setMinutes(0)
+    dateEnd.setSeconds(0)
+    dateEnd.setMilliseconds(0)
+    dateEnd.setHours(24)
+
+    const reservationsForTheDay = await Reservation.find({
+      dateEntree: {
+        $gte: dateStart
+      },
+      dateSortie: {
+        $lte: dateEnd
+      },
+      parking: parking.id
+    })
+
+    let data = JSON.parse(JSON.stringify(parking));
+    data.reserved = reservationsForTheDay.length
+    return {
+      code: 200,
+      data
+    }
+  } catch (e) {
+    console.error(e);
+    return {
+      code: 500,
+      data: {
+        msg: "Server error..."
+      }
+    }
+  }
+}
 
 
 
@@ -232,5 +255,5 @@ module.exports = {
   createParkingService,
   searchNearestParkingService,
   getLatLongService,
-  advancedResearchService
+  advancedResearchService,
 }

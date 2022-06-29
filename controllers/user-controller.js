@@ -8,8 +8,8 @@ const rateParking = async (req, res) => {
 }
 
 const getRatedParking = async (req, res) => {
-  const { userId } = req.params;
-  const { code, data } = await getRatedParkingService(userId)
+  const { parkingId } = req.params;
+  const { code, data } = await getRatedParkingService(parkingId)
   return res.status(code).json(data)
 }
 

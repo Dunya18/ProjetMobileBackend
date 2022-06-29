@@ -27,9 +27,9 @@ const rateParkingService = async (parkingId,  note, comment, userId ) => {
     }
   }
 }
-const getRatedParkingService = async (userId) => {
+const getRatedParkingService = async (parkingId) => {
   try {
-    const rates = await Parking.find({ user: userId})
+    const rates = await Rate.find({ parking: parkingId})
     if (!rates) return { code: 400, data: { msg: "Rates doesn't exist" } }
 
 
