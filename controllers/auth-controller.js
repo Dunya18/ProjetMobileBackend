@@ -1,4 +1,4 @@
-const { loginService, registerService } = require("../services/auth-service")
+const { loginService, registerService, checkExistanceService } = require("../services/auth-service")
 const { registerValidation, loginValidation } = require("../utils/validation")
 
 const login = async (req, res) => {
@@ -8,6 +8,12 @@ const login = async (req, res) => {
   if (error) return res.status(400).json({ msg: error.details[0].message });
 
   const response = await loginService(req.body);
+
+  return res.status(response.code).json(response.data);
+}
+const checkExistance = async (req, res) => {
+
+  const response = await checkExistanceService(req.body);
 
   return res.status(response.code).json(response.data);
 }
@@ -25,5 +31,6 @@ const register = async (req, res) => {
 
 module.exports = {
   login,
-  register
+  register,
+  checkExistance
 }

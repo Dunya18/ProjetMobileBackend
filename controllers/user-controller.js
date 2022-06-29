@@ -1,10 +1,17 @@
-const { rateParkingService } = require("../services/user-service")
+const { rateParkingService, getRatedParkingService } = require("../services/user-service")
 
 const rateParking = async (req, res) => {
-  const { note } = req.body;
+  const { parkingId, note, comment, userId } = req.body;
   if (note > 5) return res.status(400).json({ msg: "Rate should be < or = 5" })
-  const { code, data } = await rateParkingService(req.params.parking_id, req.body)
+  const { code, data } = await rateParkingService(parkingId,  note, comment, userId)
   return res.status(code).json(data)
 }
 
-module.exports = { rateParking }
+const getRatedParking = async (req, res) => {
+  const { userId } = req.params;
+  const { code, data } = await getRatedParkingService(userId)
+  return res.status(code).json(data)
+}
+
+
+module.exports = { rateParking, getRatedParking }
