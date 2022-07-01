@@ -3,11 +3,40 @@ const axios = require("axios")
 const NodeGeocoder = require('node-geocoder');
 const { json } = require("express");
 
+var admin = require("firebase-admin");
+
+var serviceAccount = require("C:/Users/ASUS PRO/Downloads/my-project-1656495659632-firebase-adminsdk-4ixuw-fcec6ab6fc.json");
+
+
+
 
 
 const createParkingService = async (parking) => {
   try {
     const newParking = await Parking.create(parking)
+    admin.initializeApp({
+  	credential: admin.credential.cert(serviceAccount),
+	databaseURL: "https://prismappfcm.firebaseio.com"
+});
+var topic = 'general';
+
+var message = {
+  notification: {
+    title: 'Message from admin',
+    body: 'new parking added'
+  },
+  topic: topic
+};
+
+    // Send a message to devices subscribed to the provided topic.
+admin.messaging().send(message)
+  .then((response) => {
+    // Response is a message ID string.
+    console.log('Successfully sent message:', response);
+  })
+  .catch((error) => {
+    console.log('Error sending message:', error);
+});
     return {
       code: 200,
       data: newParking
